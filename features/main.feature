@@ -10,3 +10,7 @@ Scenario: Visit home page
   Then I am told the minimum is 6 characters
   When I enter my information properly
   Then I am in biznass
+
+Scenario: Visit Contact page
+  Given I go to the contact page
+  Then there is an email to contact
