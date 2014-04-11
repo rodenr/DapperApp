@@ -8,6 +8,9 @@ gem 'bcrypt-ruby', '3.1.2'
 
 group :development, :test do
   gem 'cucumber'
+  gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions
+  gem 'database_cleaner' # to clear cucumber's test database between runs
+  gem 'launchy' # a useful debugging aid for user stories
   gem 'capybara'
 #  gem 'capybara/rails'
 #  gem 'capybara/cucmber'

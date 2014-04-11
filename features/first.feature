@@ -2,7 +2,7 @@
 
 Feature: Showcase the simplest possible Cucumber scenario 
 
- In order to verify that cucumber is installed and configured correctly 
+ In order to verify that login form is installed and configured correctly 
 
  As an aspiring BDD fanatic 
 
@@ -10,8 +10,8 @@ Feature: Showcase the simplest possible Cucumber scenario
 
  
 
-Scenario: Cutting vegetables 
-	Given a cucumber that is 30 cm long 
+Scenario: Cutting html fields 
+	Given a login form that is 30 cm long 
 	When I cut it in halves 
-	Then I have two cucumbers 
+	Then I have two login forms 
 	And both are 15 cm long

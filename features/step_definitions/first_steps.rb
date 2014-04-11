@@ -1,12 +1,12 @@
 #encoding: utf-8
 
-Given /^a cucumber that is (\d+) cm long$/ do |length| 
+Given /^a login form that is (\d+) cm long$/ do |length| 
 
 @cucumber = {:color => 'green', :length => length.to_i}
 
 end 
 
-When /^I (?:cut|chop) (?:it|the cucumber) in (?:halves|half|two)$/ do
+When /^I (?:cut|chop) (?:it|the login form) in (?:halves|half|two)$/ do
 
   @choppedCucumbers = [ 
 
@@ -18,7 +18,7 @@ When /^I (?:cut|chop) (?:it|the cucumber) in (?:halves|half|two)$/ do
 
 end
 
-When /^I have two cucumbers$/ do 
+When /^I have two login forms$/ do 
 
   @choppedCucumbers.length.should == 2
 
