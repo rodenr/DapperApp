@@ -1,11 +1,21 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 
-<%= will_paginate %>
+<%= form_tag(users_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search Users" %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
 
 <ul class="users">
   <%= render @users %>
 </ul>
+</div>
+<script src="http://listjs.com/no-cdn/list.js">
+var options = {
+  valueNames: [ 'name']
+};
 
-<%= will_paginate %>
+var userList = new List('users', options); </script>
+
+
 
