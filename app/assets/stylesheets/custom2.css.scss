@@ -16,9 +16,6 @@ html {
   overflow-y: scroll;
 }
 
-body {
-  padding-top: 60px;
-}
 
 section {
   overflow: auto;
@@ -32,6 +29,9 @@ textarea {
   text-align: center;
   h1 {
     margin-bottom: 10px;
+      color: #375a7f;
+
+
   }
 }
 
@@ -39,6 +39,8 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
+    color: #375a7f;
+
 }
 
 h1 {
@@ -46,6 +48,8 @@ h1 {
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+    color: #375a7f;
+
 }
 
 h2 {
@@ -135,6 +139,7 @@ aside {
       font-size: 1.4em;
       text-align: left;
       letter-spacing: -1px;
+        color: #375a7f;
       margin-bottom: 3px;
       margin-top: 0px;
     }
