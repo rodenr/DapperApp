@@ -17,7 +17,7 @@ describe "User pages" do
 
     it { should have_title('All users') }
     it { should have_content('All users') }
-
+=begin
     describe "pagination" do
 
       before(:all) { 30.times { FactoryGirl.create(:user) } }
@@ -31,6 +31,7 @@ describe "User pages" do
         end
       end
     end
+=end
 
     describe "delete links" do
 

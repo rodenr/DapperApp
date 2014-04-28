@@ -22,6 +22,11 @@ class User < ActiveRecord::Base
     where("name like ?", "%#{query}%")
   end
 
+  def feed
+    # this is preliminary
+    Micropost.where("user_id = ?", id)
+  end
+
   private
   def create_remember_token
     self.remember_token = User.hash(User.new_remember_token)
