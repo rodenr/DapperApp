@@ -11,6 +11,10 @@ $grayMediumLight: #eaeaea;
 }
 
 /* universal */
+p.name{
+  text-align: center;
+}
+
 
 a
 {
@@ -158,6 +162,7 @@ aside {
 .gravatar {
   float: left;
   margin-right: 10px;
+  margin-top:   10px;
 }
 
 /* forms */
