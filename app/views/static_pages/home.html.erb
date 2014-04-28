@@ -1,15 +1,26 @@
-<div class="center hero-unit">
-  <h1>Welcome to the Dapper App</h1>
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/micropost_form' %>
+      </section>
+    </aside>
+  </div>
+<% else %>
+  <div class="center hero-unit">
+    <h1>Welcome to the Dapper App</h1>
 
-  <h2>
-    This is the home page for the
-    <a href="http://http://warm-sands-2132.herokuapp.com/">Faceback App</a>
-    application.  It takes a picture of someones face and shows what the back of their head looks like.  It got horrible reviews out of the gate, but it will pick up.
-  </h2>
+    <h2>
+      This is the home page for the
+      <a href="https://warm-sands-2132.herokuapp.com/">raddest effing website</a>
+      alive on the interwebs.
+    </h2>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-</div>
+    <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  </div>
 
-<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
-
-
+  <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+<% end %>
