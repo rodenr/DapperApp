@@ -26,6 +26,16 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+      describe "friend count" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          user.follow!(other_user)
+          visit root_path
+        end
+
+        it { should have_link("1 friends", href: friends_user_path(user)) }
+      end
     end
   end
 end

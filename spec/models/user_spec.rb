@@ -155,26 +155,54 @@ describe User do
     end
   end
 
-  describe "following" do
-    let(:other_user) { FactoryGirl.create(:user) }
-    before do
-      @user.save
-      @user.follow!(other_user)
-    end
+  describe "friend relationship" do
 
-    it { should be_following(other_user) }
-    its(:followed_users) { should include(other_user) }
+    describe "following" do
+      #let(:other_user) { FactoryGirl.create(:user) }
+      before do
 
-    describe "followed user" do
-      subject { other_user }
-      its(:followers) { should include(@user) }
-    end
+        @other_user = User.new(name: "Example User1", email: "user1@example.com", password: "foobar", password_confirmation: "foobar")
+        @other_user.save
+        #@other_user.follow!(@user)
 
-    describe "and unfollowing" do
-      before { @user.unfollow!(other_user) }
+        @user.save
+        @user.follow!(@other_user)
+      end
 
-      it { should_not be_following(other_user) }
-      its(:followed_users) { should_not include(other_user) }
+      it { should be_following(@other_user) }
+      its(:followed_users) { should include(@other_user) }
+
+      describe "followed user" do
+        subject { @other_user }
+        its(:followers) { should include(@user) }
+      end
+
+      describe "are friends" do
+        before do
+          @other_user.follow!(@user)
+        end
+        describe "user is friends with other_user" do
+        # these two tests are from @user perspective
+        subject { @user } 
+          it { should be_following(@other_user) }
+          its(:followers) { should include(@other_user) }
+        end
+
+        describe "other_user is friends with user" do
+        # these two tests are from @other_user perspective
+        subject { @other_user } 
+
+          it { should be_following(@user) }
+          its(:followers) { should include(@user) }
+        end
+      end
+
+      describe "and unfollowing" do
+        before { @user.unfollow!(@other_user) }
+
+        it { should_not be_following(@other_user) }
+        its(:followed_users) { should_not include(@other_user) }
+      end
     end
   end
 end
