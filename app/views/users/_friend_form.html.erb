@@ -1,7 +1,15 @@
 <% unless current_user?(@user) %>
-  <div id="freind_form">
-    <% if current_user.following?(@user) %>
+  <div id="friend_form">
+    <% if current_user.following?(@user) and @user.following?(current_user) %>
       <%= render 'unfriend' %>
+    <% elsif current_user.following?(@user) and not @user.following?(current_user) %>
+      <p class='pending'>pending friend request...</p>
+    <% elsif @user.following?(current_user) and not current_user.following?(@user) %>
+      <p>hello</p>
+      <%= form_for(current_user.relationships.build(followed_id: @user.id)) do |f| %>
+          <div><%= f.hidden_field :followed_id %></div>
+            <%= f.submit "Accept Request", class: "btn btn-large btn-primary" %>
+          <% end %>
     <% else %>
       <%= render 'friend' %>
     <% end %>
