@@ -1,4 +1,5 @@
 <% provide(:title, @user.name) %>
+
 <div class="row">
   <aside class="span4">
     <section>
@@ -6,6 +7,13 @@
         <%= gravatar_for(@user, size: 300) %>
       </h1>
       <p class="name"> <%= @user.name %> </p>
+    </section>
+    <section class="profile">
+        <p class="aboutme"> About Me:<br><%= @user.aboutme %> <br></p>
+        <p class="interests"> Interests:<br><%= @user.interests %> </p>
+        <p class="quotes"> Quotes:<br><%= @user.quotes %> </p>
+        <p class="hometown"> Hometown:<br><%= @user.hometown %> </p>
+        <p class="SEMT"> Do i like Ifi?:<br><%= @user.SEMT %> </p>
     </section>
   </aside>
   <div class="span8">
