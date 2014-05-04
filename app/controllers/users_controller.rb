@@ -50,6 +50,13 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  def friends
+    @title = "Friends"
+    @user  = User.find(params[:id])
+    @users = @user.followed_users & @user.followers
+    render 'show_friends'
+  end
+
   private
 
     def user_params
