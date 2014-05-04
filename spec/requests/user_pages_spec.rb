@@ -71,6 +71,77 @@ describe "User pages" do
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
     end
+
+    describe "add friend/unfriend buttons" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      #before { sign_in user }
+
+      describe "sending a friend request" do
+        before do
+          sign_in user
+          visit user_path(other_user)
+        end
+
+        it "should increment the user.followed_users count (send friend request)" do
+          expect do
+            click_button "Add Friend"
+          end.to change(user.followed_users, :count).by(1)
+        end
+
+        it "should update other_user.followers count (recieve friend request)" do
+          expect do
+            click_button "Add Friend"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+        describe "toggling the button" do
+          before { click_button "Add Friend" }
+          it { should have_xpath("//input[@value='Unfriend']") }
+        end
+      end
+
+      describe "accepting a friend request" do
+        before do
+          sign_in other_user
+          visit user_path(other_user) 
+        end
+
+
+        it "should increment the other_user.followed_users count (accepting friend request)" do
+          expect do
+            click_button "Accept Request"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+        # this isn't quite working need to think process out
+        it "should increment the user.followers count (friend request accepted)" do
+          expect do
+            click_button "Accept Request"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+
+      describe "unfriending a user" do
+        before do
+          user.follow!(other_user)
+          other_user.follow!(user)
+          visit user_path(other_user)
+        end
+
+        it "should decrement followed_user/followers for user/other_user" do
+          expect do click_button "Unfriend"
+          end.to change(user.followed_users, :count).by(-1) 
+                  and change(user.followers, :count).by(-1)
+                  and change(other_user.followed_users, :count).by(-1) 
+                  and change(other_user.followers, :count).by(-1)
+        end
+
+        describe "toggling the button" do
+          before { click_button "Unfriend" }
+          it { should have_xpath("//input[@value='Add Friend']") }
+        end
+      end
+    end
   end
 
 

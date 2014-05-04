@@ -8,7 +8,7 @@ describe "Static pages" do
     before { visit root_path }
 
     it { should have_content('Dapper App') }
-    it { should have_title("FaceBack app attack") }
+    it { should have_title("Dapper App") }
     it { should_not have_title('| Home') }
 
 
