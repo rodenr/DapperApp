@@ -17,7 +17,7 @@ describe "User pages" do
 
     it { should have_title('All users') }
     it { should have_content('All users') }
-
+=begin
     describe "pagination" do
 
       before(:all) { 30.times { FactoryGirl.create(:user) } }
@@ -31,6 +31,7 @@ describe "User pages" do
         end
       end
     end
+=end
 
     describe "delete links" do
 
@@ -69,6 +70,90 @@ describe "User pages" do
       it { should have_content(m1.content) }
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
+    end
+
+    describe "add friend/unfriend buttons" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      #before { sign_in user }
+
+      describe "sending a friend request" do
+        before do
+          sign_in user
+          visit user_path(other_user)
+        end
+
+        it "should increment the user.followed_users count (send friend request)" do
+          expect do
+            click_button "Add Friend"
+          end.to change(user.followed_users, :count).by(1)
+        end
+
+        it "should update other_user.followers count (recieve friend request)" do
+          expect do
+            click_button "Add Friend"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+        describe "toggling the button" do
+          before { click_button "Add Friend" }
+          it { should have_xpath("//input[@value='Unfriend']") }
+        end
+      end
+
+      describe "accepting a friend request" do
+        before do
+          sign_in other_user
+          visit user_path(other_user) 
+        end
+
+        it "should increment the other_user.followed_users count (accepting friend request)" do
+          expect do
+            click_button "Accept Request"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+        # don't need to click a button, just show up to date info
+        #it "should increment the user.followers count (friend request accepted)" do
+        #  expect do
+        #    click_button "Accept Request"
+        #  end.to change(other_user.followers, :count).by(1)
+        #end
+      end
+
+      describe "unfriending a user" do
+        before do
+          user.follow!(other_user)
+          other_user.follow!(user)
+          visit user_path(other_user)
+        end
+
+        it "should decrement followed_users for user" do
+          expect do click_button "Unfriend"
+          end.to change(user.followed_users, :count).by(-1) 
+        end
+
+        it "should decrement followers for user" do
+          expect do click_button "Unfriend"
+          end.to change(user.followers, :count).by(-1)
+        end
+
+        it "should decrement followed_users for other_user" do
+          expect do click_button "Unfriend"
+          end.to change(other_user.followed_users, :count).by(-1) 
+        end
+
+        it "should decrement followers for other_user" do
+          expect do click_button "Unfriend"
+          end.to change(other_user.followers, :count).by(-1) 
+        end
+
+
+
+        describe "toggling the button" do
+          before { click_button "Unfriend" }
+          it { should have_xpath("//input[@value='Add Friend']") }
+        end
+      end
     end
   end
 
@@ -153,4 +238,34 @@ describe "User pages" do
     end
   end
 
+  describe "following/followers (friends)" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      user.follow!(other_user)
+      other_user.follow!(user)
+    end
+
+    describe "friends" do
+      before do
+        sign_in user
+        visit friends_user_path(user)
+      end
+
+      it { should have_title(full_title('Friends')) }
+      it { should have_selector('h3', text: 'Friends') }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end
+
+    describe "friends with friend" do
+      before do
+        sign_in other_user
+        visit friends_user_path(other_user)
+      end
+
+      it { should have_title(full_title('Friends')) }
+      it { should have_selector('h3', text: 'Friends') }
+      it { should have_link(user.name, href: user_path(user)) }
+    end
+  end
 end

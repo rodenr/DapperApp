@@ -7,4 +7,16 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+
+  def num_friends(user)
+    x=0
+    user.followers.each do |follower|
+      user.followed_users.each do |following|
+        if follower.email == following.email then
+          x+=1
+        end
+      end
+    end
+    x
+  end
 end

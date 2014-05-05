@@ -8,6 +8,9 @@
       </h1>
       <p class="name"> <%= @user.name %> </p>
     </section>
+    <section>
+      <%= render 'shared/stats' %>
+      </section>
     <section class="profile">
         <p class="aboutme"> About Me:<br><%= @user.aboutme %> <br></p>
 
@@ -15,6 +18,7 @@
     </section>
   </aside>
   <div class="span8">
+    <%= render 'friend_form' if signed_in? %>
     <% if @user.microposts.any? %>
       <h3>Berlin Wall (<%= @user.microposts.count %>)</h3>
       <ol class="microposts">
