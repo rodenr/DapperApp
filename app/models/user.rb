@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    # this is preliminary
-    Micropost.where("user_id = ?", id)
+    #Micropost.where("user_id = ?", id)
+    Micropost.from_users_friends_with(self)
   end
 
   def following?(other_user)

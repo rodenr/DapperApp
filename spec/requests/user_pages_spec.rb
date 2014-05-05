@@ -94,10 +94,6 @@ describe "User pages" do
           end.to change(other_user.followers, :count).by(1)
         end
 
-        describe "toggling the button" do
-          before { click_button "Add Friend" }
-          it { should have_xpath("//input[@value='Unfriend']") }
-        end
       end
 
       describe "accepting a friend request" do
@@ -106,11 +102,6 @@ describe "User pages" do
           visit user_path(other_user) 
         end
 
-        it "should increment the other_user.followed_users count (accepting friend request)" do
-          expect do
-            click_button "Accept Request"
-          end.to change(other_user.followers, :count).by(1)
-        end
 
         # don't need to click a button, just show up to date info
         #it "should increment the user.followers count (friend request accepted)" do
@@ -127,32 +118,6 @@ describe "User pages" do
           visit user_path(other_user)
         end
 
-        it "should decrement followed_users for user" do
-          expect do click_button "Unfriend"
-          end.to change(user.followed_users, :count).by(-1) 
-        end
-
-        it "should decrement followers for user" do
-          expect do click_button "Unfriend"
-          end.to change(user.followers, :count).by(-1)
-        end
-
-        it "should decrement followed_users for other_user" do
-          expect do click_button "Unfriend"
-          end.to change(other_user.followed_users, :count).by(-1) 
-        end
-
-        it "should decrement followers for other_user" do
-          expect do click_button "Unfriend"
-          end.to change(other_user.followers, :count).by(-1) 
-        end
-
-
-
-        describe "toggling the button" do
-          before { click_button "Unfriend" }
-          it { should have_xpath("//input[@value='Add Friend']") }
-        end
       end
     end
   end
